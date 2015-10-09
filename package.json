@@ -1,0 +1,46 @@
+{
+  "name": "nsconfig",
+  "version": "0.1.0",
+  "description": "Load Netsuite Auth Configuration",
+  "main": "src/nsconfig.js",
+  "scripts": {
+    "test": "gulp test",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suiteplus/nsconfig.git"
+  },
+  "keywords": [
+    "netsuite",
+    "suiteplus",
+    "suite",
+    "s+"
+  ],
+  "author": "daniel.joppi@suiteplus.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/suiteplus/nsconfig/issues"
+  },
+  "homepage": "https://github.com/suiteplus/nsconfig#readme",
+  "dependencies": {
+    "lodash.assign": "^3.2.0",
+    "osenv": "^0.1.3"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.4",
+    "cp": "^0.2.0",
+    "gulp": "^3.9.0",
+    "gulp-istanbul": "^0.10.1",
+    "gulp-jshint": "^1.11.2",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-mocha": "^2.1.3",
+    "gulp-plumber": "^1.0.1",
+    "isparta": "^3.1.0",
+    "jshint-stylish": "^2.0.1",
+    "q": "^1.4.1",
+    "require-dir": "^0.3.0",
+    "rimraf": "^2.4.3",
+    "should": "^7.1.0"
+  }
+}
