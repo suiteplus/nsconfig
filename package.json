@@ -1,6 +1,6 @@
 {
   "name": "nsconfig",
-  "version": "0.2.0-pre",
+  "version": "0.2.0",
   "description": "Load Netsuite Auth Configuration",
   "main": "dist/nsconfig.js",
   "scripts": {

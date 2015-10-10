@@ -34,7 +34,7 @@ The following priority is taken for each parameter (using `_.extend`)
 
  1. Direct code input
 
- 2. `./nsconfig.json`
+ 2. `./nsconfig.json`, then `../nsconfig.json`, up to 3 levels.
 
  2. `~/.ns/nsconfig.json`
 
