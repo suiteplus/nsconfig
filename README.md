@@ -4,7 +4,7 @@ Load Netsuite Auth Configuration
 
 ## Required
 
- * node.js 4+
+ * node.js 0.10+ or io.js 1+ or node.js 4+
 
 ## Install [![Dependency Status][david-image]][david-url] [![devDependency Status][david-image-dev]][david-url-dev]
 ```bash

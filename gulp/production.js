@@ -11,11 +11,11 @@ var gulp = require('gulp'),
 
 var defaultTasks = ['env:prod', 'prod:babel'];
 
-gulp.task('env:prod', ['test:jshint', 'test:coverage'], function () {
+gulp.task('env:prod', ['test:jshint', 'test:coverage'], () => {
     process.env.NODE_ENV = 'production';
 });
 
-gulp.task('prod:babel', function () {
+gulp.task('prod:babel', () => {
     return gulp.src(paths.js)
         .pipe(plugins.babel())
         .pipe(gulp.dest(appRoot + '/dist'));

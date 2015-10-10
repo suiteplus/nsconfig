@@ -5,35 +5,35 @@ var gulp = require('gulp'),
     plugins = gulpLoadPlugins(),
     appRoot = process.cwd(),
     paths = {
-        jsSrc: appRoot + '/src/**/*.js',
-        jsDist: appRoot + '/dist/**/*.js',
-        jsTests: appRoot + '/test/**/*-test.js'
+        jsSrc: [appRoot + '/src/**/*.js'],
+        jsDist: [appRoot + '/dist/**/*.js'],
+        jsTests: [appRoot + '/test/**/*-test.js']
     };
 
 var defaultTasks = ['env:test', 'test:babel', 'test:jshint', 'test:coverage'];
 
-gulp.task('env:test', function () {
+gulp.task('env:test', () => {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     process.env.NODE_ENV = 'test';
 });
 
-gulp.task('test:babel', function () {
+gulp.task('test:babel', () => {
     return gulp.src(paths.jsSrc)
         .pipe(plugins.babel())
         .pipe(gulp.dest(appRoot + '/dist'));
 });
 
-gulp.task('test:jshint', ['test:babel'], function () {
+gulp.task('test:jshint', ['test:babel'], () => {
     return gulp.src(paths.jsDist)
         .pipe(plugins.jshint())
         .pipe(plugins.jshint.reporter('jshint-stylish'))
         .pipe(plugins.jshint.reporter('fail'));
 });
 
-gulp.task('test:coverage', ['test:jshint'], function () {
-    var deferred = require('q').defer();
-
-    var executeTests = function () {
+gulp.task('test:coverage', ['test:jshint'], () => {
+    let deferred = require('q').defer();
+    
+    let executeTests = () => {
         gulp.src(paths.jsTests)
             .pipe(plugins.plumber())
             .pipe(plugins.mocha({
@@ -53,8 +53,8 @@ gulp.task('test:coverage', ['test:jshint'], function () {
 
         })) // Covering files
         .pipe(plugins.istanbul.hookRequire())// Force `require` to return covered files
-        .on('finish', function(){ executeTests()});
-    return deferred.promise
+        .on('finish', () => executeTests());
+    return deferred.promise;
 });
 
 gulp.task('test', defaultTasks);
