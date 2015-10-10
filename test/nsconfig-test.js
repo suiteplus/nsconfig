@@ -1,7 +1,7 @@
 'use strict';
 
 var fs = require('fs'),
-    nsconfig = require('../.'),
+    nsconfig = require('../src/nsconfig'),
     should = require('should'),
     osenv = require('osenv'),
     cp = require('cp'),

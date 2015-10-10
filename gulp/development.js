@@ -9,7 +9,7 @@ var gulp = require('gulp'),
         jsTests: [appRoot + '/test/**/*-test.js']
     };
 
-var defaultTasks = ['env:development', 'dev:jshint', 'dev:mocha', 'watch'];
+var defaultTasks = ['env:development', 'dev:jshint', 'dev:mocha', 'dev:watch'];
 
 gulp.task('env:development', function () {
     process.env.NODE_ENV = 'development';
@@ -29,7 +29,7 @@ gulp.task('dev:mocha', function (cb) {
         .pipe(plugins.mocha())
 });
 
-gulp.task('watch', function () {
+gulp.task('dev:watch', function () {
     gulp.watch(paths.js.concat(paths.jsTests), ['development', 'dev:mocha'])
 });
 

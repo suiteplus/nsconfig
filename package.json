@@ -2,7 +2,7 @@
   "name": "nsconfig",
   "version": "0.2.0-pre",
   "description": "Load Netsuite Auth Configuration",
-  "main": "src/nsconfig.js",
+  "main": "dist/nsconfig.js",
   "scripts": {
     "test": "gulp test",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
@@ -31,6 +31,7 @@
     "coveralls": "^2.11.4",
     "cp": "^0.2.0",
     "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
     "gulp-istanbul": "^0.10.1",
     "gulp-jshint": "^1.11.2",
     "gulp-load-plugins": "^0.10.0",
