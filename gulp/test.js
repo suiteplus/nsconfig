@@ -33,7 +33,7 @@ gulp.task('test:jshint', ['test:babel'], function () {
 gulp.task('test:coverage', ['test:jshint'], function () {
     var deferred = require('q').defer();
 
-    let executeTests = function () {
+    var executeTests = function () {
         gulp.src(paths.jsTests)
             .pipe(plugins.plumber())
             .pipe(plugins.mocha({
