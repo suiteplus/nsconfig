@@ -53,7 +53,7 @@ gulp.task('test:coverage', ['test:jshint'], function () {
 
         })) // Covering files
         .pipe(plugins.istanbul.hookRequire())// Force `require` to return covered files
-        .on('finish', () => executeTests());
+        .on('finish', function(){ executeTests()});
     return deferred.promise
 });
 
