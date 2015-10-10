@@ -5,25 +5,32 @@ var gulp = require('gulp'),
     plugins = gulpLoadPlugins(),
     appRoot = process.cwd(),
     paths = {
-        js: [appRoot + '/src/**/*.js'],
-        jsTests: [appRoot + '/test/**/*-test.js']
+        jsSrc: appRoot + '/src/**/*.js',
+        jsDist: appRoot + '/dist/**/*.js',
+        jsTests: appRoot + '/test/**/*-test.js'
     };
 
-var defaultTasks = ['env:test', 'test:jshint', 'test:coverage'];
+var defaultTasks = ['env:test', 'test:babel', 'test:jshint', 'test:coverage'];
 
 gulp.task('env:test', function () {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     process.env.NODE_ENV = 'test';
 });
 
-gulp.task('test:jshint', function () {
-    return gulp.src(paths.js)
+gulp.task('test:babel', function () {
+    return gulp.src(paths.jsSrc)
+        .pipe(plugins.babel())
+        .pipe(gulp.dest(appRoot + '/dist'));
+});
+
+gulp.task('test:jshint', ['test:babel'], function () {
+    return gulp.src(paths.jsDist)
         .pipe(plugins.jshint())
         .pipe(plugins.jshint.reporter('jshint-stylish'))
         .pipe(plugins.jshint.reporter('fail'));
 });
 
-gulp.task('test:coverage', function () {
+gulp.task('test:coverage', ['test:jshint'], function () {
     var deferred = require('q').defer();
 
     let executeTests = function () {
@@ -38,7 +45,7 @@ gulp.task('test:coverage', function () {
     };
 
     // instrumentation *.js
-    gulp.src(paths.js)
+    gulp.src(paths.jsDist)
         .pipe(plugins.plumber())
         .pipe(plugins.istanbul({
             includeUntested: true,
