@@ -1,6 +1,8 @@
 # nsconfig [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coveralls Status][coveralls-image]][coveralls-url]
 
-Load Netsuite Auth Configuration
+Configuration options for netsuite-related packages.
+
+Set up authentication and custom parameters environment-wise or project-wise.
 
 ## Required
 
@@ -12,43 +14,57 @@ Load Netsuite Auth Configuration
 ```
 
 ## Usage
-```javascript
-	var nsconfig = require('nsconfig');
 
-	// read NetSuite Configurations
-	var params = nsconfig({}, true);
-	console.log('email:', params.email);
-	console.log('password:', params.password);
-	console.log('account:', params.account);
-	console.log('realm:', params.realm); // default: 'system.netsuite.com'
-	console.log('role:', params.role);
+### nsconfig( overrideParams : any , projectParams? : ParamsDef[] , noThrow? : boolean )
+
+Reads configuration parameters from the following sources (overriding each parameter on the same order):
+
+  *  `overrideParams` argument;
+
+  *  Searches up to 5 levels above cwd for a `nsconfig.json` file
+
+  *  Searches for a `~/.ns/nsconfig.json` (on windows `~` is `X:/Users/<user>`)
+
+  *  Searches for environment variables. In this case, parameters are uppercased and prefixed with `NSCONF_`.
+
+__projectParams__
+
+Set additional parameters that your module may want to look up.
+
+The default parameters are:
+
+```javascript
+[
+    {name: 'email', required: true},
+    {name: 'password', required: true},
+    {name: 'account', required: true},
+    {name: 'realm', def: 'system.netsuite.com'},
+    {name: 'role'}
+]
+```
+Currently accepted options for each custom parameter are:
+
+```typescript
+interface ParamsDef {
+	name : string;
+	required? : boolean; //throws an error if this parameter is not defined
+	def? : boolean;      //defaults to this value if this parameter is not defined
+}
 ```
 
-## Input options
 
-The parameters may be stored in `~/.ns/nsconfig.json`, in environment variables, or passed directly.
+### Output example
 
-For environment variables, prefix the options with "NSCONF_" and write in uppercase.
+	var params = nsconfig()
 
-The following priority is taken for each parameter (using `_.extend`)
-
- 1. Direct code input
-
- 2. `./nsconfig.json`, then `../nsconfig.json`, up to 3 levels.
-
- 2. `~/.ns/nsconfig.json`
-
- 3. Environment variables
-
-## Output
 ```json
-	{
-		"email": "email@suiteplus.com",
-		"password": "*****",
-		"account": "DDAA12321",
-		"realm": "system.netsuite.com",
-		"role": "Administrator"
-	}
+{
+	"email": "email@suiteplus.com",
+	"password": "*****",
+	"account": "DDAA12321",
+	"realm": "system.netsuite.com",
+	"role": 3
+}
 ```
 
 [travis-url]: https://travis-ci.org/suiteplus/nsconfig

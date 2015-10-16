@@ -1,7 +1,7 @@
 {
   "name": "nsconfig",
-  "version": "0.3.0-pre",
-  "description": "Load Netsuite Auth Configuration",
+  "version": "0.3.0-pre2",
+  "description": "Netsuite Auth Configuration",
   "main": "dist/nsconfig.js",
   "scripts": {
     "test": "gulp test",
