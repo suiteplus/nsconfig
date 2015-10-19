@@ -116,4 +116,16 @@ describe('Reading the config files... ', () => {
 
         should(params).have.property('email', nameLocal);
     });
+
+    it('use a custom required parameter. Fail on it.' , () => {
+
+        try {
+            var params = nsconfig({}, [{name: 'anyparams', required: true}]);
+        } catch(e) {
+            var a = 2;
+        }
+        var a = 0;
+
+    });
+
 });
