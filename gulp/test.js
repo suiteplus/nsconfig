@@ -10,7 +10,7 @@ var gulp = require('gulp'),
         jsTests: [appRoot + '/test/**/*-test.js']
     };
 
-var defaultTasks = ['env:test', 'test:babel', 'test:jshint', 'test:coverage'];
+gulp.task('test', ['env:test', 'test:babel', 'test:jshint', 'test:coverage']);
 
 gulp.task('env:test', () => {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -56,5 +56,3 @@ gulp.task('test:coverage', ['test:jshint'], () => {
         .on('finish', () => executeTests());
     return deferred.promise;
 });
-
-gulp.task('test', defaultTasks);
