@@ -116,4 +116,15 @@ describe('Reading the config files... ', () => {
 
         should(params).have.property('email', nameLocal);
     });
+
+    it('use a custom required parameter. Fail on it.' , function() {
+
+        this.timeout(10000);
+
+        should(function(){
+            nsconfig({}, [{name: 'anyparams', required: true}]);
+        }).throw();
+
+    });
+
 });

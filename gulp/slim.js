@@ -1,3 +1,5 @@
+//"slim": Just the most important things for hack-n-slash
+
 'use strict';
 
 var gulp = require('gulp'),

@@ -14,7 +14,7 @@ function nsconfig (params, arg2 , arg3) {
     var custom = {};
     var nothrow = false;
     if ( arguments.length === 2 && typeof arg2 == 'boolean' ) nothrow = arg2;
-    else if (arguments.length === 2) nothrow = arg2;
+    else if (arguments.length === 2) custom = arg2;
     else if (arguments.length === 3) {
         nothrow = arg3;
         custom = arg2 || {};
@@ -25,7 +25,7 @@ function nsconfig (params, arg2 , arg3) {
         confEnvVars = readConfEnvVar();
 
     params = _.extend({}, confEnvVars, confFileGlobal, confFileLocal, params);
-    params = checkParams(params, nothrow);
+    params = checkParams(params, nothrow,custom);
     return params;
 }
 
@@ -84,8 +84,11 @@ function readConfEnvVar() {
     }, {});
 }
 
-function checkParams(params, nothrow) {
-    return PARAMS_DEF.reduce((prev, curr) => {
+function checkParams(params, nothrow, custom) {
+
+    var defs = PARAMS_DEF.concat(custom||[]);
+
+    return defs.reduce((prev, curr) => {
 
         if (!params[curr.name] && curr.required && !nothrow) throw Error(`No ${curr.name} defined.`);
         prev[curr.name] = params[curr.name] || curr.def;
