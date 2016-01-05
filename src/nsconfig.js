@@ -33,7 +33,7 @@ var PARAMS_DEF = [
     {name: 'email', required: true},
     {name: 'password', required: true},
     {name: 'account', required: true},
-    {name: 'realm', def: 'system.netsuite.com'},
+    {name: 'realm', def: 'netsuite.com'},
     {name: 'role'}
 ]; //ps: default is reserved word
 
