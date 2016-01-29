@@ -1,4 +1,5 @@
 'use strict';
+
 var fs = require('fs'),
     _ = {
     extend: require('lodash.assign')
@@ -18,7 +19,7 @@ function nsconfig(params, arg2, arg3) {
         custom = arg2 || {};
     }
 
-    var confFileGlobal = readConfFile(osenv.home() + '/.ns/nsconfig.json'),
+    var confFileGlobal = readConfFile(`${ osenv.home() }/.ns/nsconfig.json`),
         confFileLocal = readConfFile(resolveLocalConfPath()),
         confEnvVars = readConfEnvVar();
 
@@ -27,7 +28,7 @@ function nsconfig(params, arg2, arg3) {
     return params;
 }
 
-var PARAMS_DEF = [{ name: 'email', required: true }, { name: 'password', required: true }, { name: 'account', required: true }, { name: 'realm', def: 'system.netsuite.com' }, { name: 'role' }]; //ps: default is reserved word
+var PARAMS_DEF = [{ name: 'email', required: true }, { name: 'password', required: true }, { name: 'account', required: true }, { name: 'realm', def: 'netsuite.com' }, { name: 'role' }]; //ps: default is reserved word
 
 function resolveLocalConfPath() {
     function parent(pathstr) {
@@ -55,7 +56,7 @@ function readConfFile(path) {
     var out = {};
     if (!fs.existsSync(path)) return out;
     try {
-        var content = fs.readFileSync(path);
+        let content = fs.readFileSync(path);
         out = JSON.parse(content);
     } catch (e) {
         //purposely ignore
@@ -66,9 +67,9 @@ function readConfFile(path) {
 }
 
 function readConfEnvVar() {
-    return PARAMS_DEF.reduce(function (prev, curr) {
+    return PARAMS_DEF.reduce((prev, curr) => {
 
-        var value = process.env['NSCONF_' + curr.name.toUpperCase()];
+        var value = process.env[`NSCONF_${ curr.name.toUpperCase() }`];
         if (value) prev[curr.name] = value;
         return prev;
     }, {});
@@ -78,9 +79,9 @@ function checkParams(params, nothrow, custom) {
 
     var defs = PARAMS_DEF.concat(custom || []);
 
-    return defs.reduce(function (prev, curr) {
+    return defs.reduce((prev, curr) => {
 
-        if (!params[curr.name] && curr.required && !nothrow) throw Error('No ' + curr.name + ' defined.');
+        if (!params[curr.name] && curr.required && !nothrow) throw Error(`No ${ curr.name } defined.`);
         prev[curr.name] = params[curr.name] || curr.def;
         return prev;
     }, {});

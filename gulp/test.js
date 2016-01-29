@@ -48,8 +48,7 @@ gulp.task('test:coverage', ['test:jshint'], () => {
     gulp.src(paths.jsDist)
         .pipe(plugins.plumber())
         .pipe(plugins.istanbul({
-            includeUntested: true,
-            instrumenter: require('isparta').Instrumenter
+            includeUntested: true
 
         })) // Covering files
         .pipe(plugins.istanbul.hookRequire())// Force `require` to return covered files
