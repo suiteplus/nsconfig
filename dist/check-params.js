@@ -1,1 +1,23 @@
-"use strict";var PARAMS_DEF=require("./default-params");module.exports=function(e,r,a){var n=PARAMS_DEF.concat(a||[]);return n.reduce(function(a,n){var t=e[n.name];if(!t&&n.base64){var u=e[n.name+"Hash"];u&&(t=new Buffer(u,"base64").toString())}if(!t&&n.required&&!r)throw Error("No "+n.name+" defined.");return a[n.name]=t||n.def,a},{})};
+'use strict';
+
+var PARAMS_DEF = require('./default-params');
+
+module.exports = function (params, nothrow, custom) {
+    var defs = PARAMS_DEF.concat(custom || []);
+
+    return defs.reduce(function (prev, curr) {
+        var value = params[curr.name];
+
+        if (!value && curr.base64) {
+            var hash = params[curr.name + 'Hash'];
+            if (hash) {
+                value = new Buffer(hash, 'base64').toString();
+            }
+        }
+        if (!value && curr.required && !nothrow) {
+            throw Error('No ' + curr.name + ' defined.');
+        }
+        prev[curr.name] = value || curr.def;
+        return prev;
+    }, {});
+};

@@ -1,7 +1,7 @@
 'use strict';
 
 var fs = require('fs'),
-    nsconfig = require('../src/nsconfig'),
+    nsconfig = require('../.'),
     should = require('should'),
     osenv = require('osenv'),
     cp = require('cp'),
@@ -71,15 +71,31 @@ describe('<nsconfig Tests>', () => {
 
     describe('Reading the config files... ', () => {
 
-        it('reads email from global config file', () => {
-            var name = `globalemail${myrand()}`;
+        it('reads email and raw password from global config file', () => {
+            var name = `globalemail${myrand()}`,
+                passw = 'opalegal';
 
             fs.writeFileSync(`${osenv.home()}/.ns/nsconfig.json`,
-                JSON.stringify({email: name})
+                JSON.stringify({email: name, password: passw})
             );
             var params = nsconfig({}, true);
 
             should(params).have.property('email', name);
+            should(params).have.property('password', passw);
+        });
+
+        it('reads email and hash password from global config file', () => {
+            var name = `globalemail${myrand()}`,
+                passw = 'opalegal',
+                passwHash = new Buffer(passw).toString('base64');
+
+            fs.writeFileSync(`${osenv.home()}/.ns/nsconfig.json`,
+                JSON.stringify({email: name, passwordHash: passwHash})
+            );
+            var params = nsconfig({}, true);
+
+            should(params).have.property('email', name);
+            should(params).have.property('password', passw);
         });
 
         it('reads email from local config file', () => {

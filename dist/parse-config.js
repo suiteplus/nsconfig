@@ -1,1 +1,17 @@
-"use strict";var fs=require("fs");module.exports=function(r){var e={};if(!fs.existsSync(r))return e;try{var s=fs.readFileSync(r);e=JSON.parse(s)}catch(t){}return e};
+'use strict';
+
+var fs = require('fs');
+
+module.exports = function (path) {
+    var out = {};
+    if (!fs.existsSync(path)) return out;
+    try {
+        var content = fs.readFileSync(path);
+        out = JSON.parse(content);
+    } catch (e) {
+        //purposely ignore
+        //console.error(e);
+    }
+
+    return out;
+};

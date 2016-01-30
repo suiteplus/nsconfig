@@ -17,8 +17,14 @@ gulp.task('env:test', () => {
     process.env.NODE_ENV = 'test';
 });
 
-gulp.task('test:jshint', () => {
+gulp.task('test:babel', () => {
     return gulp.src(paths.jsSrc)
+        .pipe(plugins.babel())
+        .pipe(gulp.dest(`${appRoot}/dist`));
+});
+
+gulp.task('test:jshint', ['test:babel'], () => {
+    return gulp.src(paths.jsDist)
         .pipe(plugins.jshint())
         .pipe(plugins.jshint.reporter('jshint-stylish'))
         .pipe(plugins.jshint.reporter('fail'));
@@ -39,11 +45,10 @@ gulp.task('test:coverage', ['test:jshint'], () => {
     };
 
     // instrumentation *.js
-    gulp.src(paths.jsSrc)
+    gulp.src(paths.jsDist)
         .pipe(plugins.plumber())
         .pipe(plugins.istanbul({
             includeUntested: true
-
         })) // Covering files
         .pipe(plugins.istanbul.hookRequire())// Force `require` to return covered files
         .on('finish', () => executeTests());

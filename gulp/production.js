@@ -11,7 +11,7 @@ var gulp = require('gulp'),
 
 var defaultTasks = ['env:prod', 'prod:babel'];
 
-gulp.task('env:prod', ['test:jshint', 'test:coverage'], () => {
+gulp.task('env:prod', () => {
     process.env.NODE_ENV = 'production';
 });
 
