@@ -6,9 +6,7 @@ var fs = require('fs'),
     osenv = require('osenv'),
     path = require('path');
 
-module.exports = nsconfig;
-
-function nsconfig (params, arg2 , arg3) {
+module.exports = function (params, arg2 , arg3) {
     params = params || {};
 
     var custom = {};
@@ -27,11 +25,11 @@ function nsconfig (params, arg2 , arg3) {
     params = _.extend({}, confEnvVars, confFileGlobal, confFileLocal, params);
     params = checkParams(params, nothrow,custom);
     return params;
-}
+};
 
 var PARAMS_DEF = [
     {name: 'email', required: true},
-    {name: 'password', required: true},
+    {name: 'password', required: true, base64: true},
     {name: 'account', required: true},
     {name: 'realm', def: 'netsuite.com'},
     {name: 'role'}
@@ -85,13 +83,18 @@ function readConfEnvVar() {
 }
 
 function checkParams(params, nothrow, custom) {
-
-    var defs = PARAMS_DEF.concat(custom||[]);
+    var defs = PARAMS_DEF.concat(custom || []);
 
     return defs.reduce((prev, curr) => {
+        var value = params[curr.name];
 
-        if (!params[curr.name] && curr.required && !nothrow) throw Error(`No ${curr.name} defined.`);
-        prev[curr.name] = params[curr.name] || curr.def;
+        if (!value && curr.base64) {
+            value = params[curr.name + 'Hash']
+        }
+        if (!value && curr.required && !nothrow) {
+            throw Error(`No ${curr.name} defined.`);
+        }
+        prev[curr.name] = value || curr.def;
         return prev;
 
     }, {});
