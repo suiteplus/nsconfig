@@ -7,8 +7,8 @@ var gulp = require('gulp'),
     plugins = gulpLoadPlugins(),
     appRoot = process.cwd(),
     paths = {
-        js: [appRoot + '/src/**/*.js'],
-        jsTests: [appRoot + '/test/**/*-test.js']
+        js: [`${appRoot}/src/**/*.js`],
+        jsTests: [`${appRoot}/test/**/*-test.js`]
     };
 
 var defaultTasks = ['env:development', 'dev:jshint', 'dev:mocha', 'dev:watch'];

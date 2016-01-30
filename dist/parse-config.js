@@ -1,0 +1,1 @@
+"use strict";var fs=require("fs");module.exports=function(r){var e={};if(!fs.existsSync(r))return e;try{var s=fs.readFileSync(r);e=JSON.parse(s)}catch(t){}return e};

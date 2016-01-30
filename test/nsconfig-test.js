@@ -1,7 +1,7 @@
 'use strict';
 
 var fs = require('fs'),
-    nsconfig = require('../.'),
+    nsconfig = require('../src/nsconfig'),
     should = require('should'),
     osenv = require('osenv'),
     cp = require('cp'),
@@ -11,12 +11,12 @@ function myrand() {
     return Math.ceil(Math.random() * 1000);
 }
 
-describe('Reading the config files... ', () => {
+describe('<nsconfig Tests>', () => {
 
     function cpIfExists(path, inverse) {
         var ext1 = inverse ? '.temp' : '';
         var ext2 = inverse ? '' : '.temp';
-        if (fs.existsSync(path+ext1)) {
+        if (fs.existsSync(path + ext1)) {
             cp.sync(path + ext1, path + ext2);
         }
     }
@@ -69,62 +69,62 @@ describe('Reading the config files... ', () => {
         });
     });
 
-    it('reads email from global config file', () => {
-        var name = `globalemail${myrand()}`;
+    describe('Reading the config files... ', () => {
 
-        fs.writeFileSync(`${osenv.home()}/.ns/nsconfig.json`,
-            JSON.stringify({email: name})
-        );
-        var params = nsconfig({}, true);
+        it('reads email from global config file', () => {
+            var name = `globalemail${myrand()}`;
 
-        should(params).have.property('email', name);
+            fs.writeFileSync(`${osenv.home()}/.ns/nsconfig.json`,
+                JSON.stringify({email: name})
+            );
+            var params = nsconfig({}, true);
+
+            should(params).have.property('email', name);
+        });
+
+        it('reads email from local config file', () => {
+            var name = `localemail${myrand()}`;
+
+            fs.writeFileSync('./nsconfig.json',
+                JSON.stringify({email: name})
+            );
+            var params = nsconfig({}, true);
+
+            should(params).have.property('email', name);
+        });
+
+        it('reads email from environment variable', () => {
+            var name = `localemail${myrand()}`;
+            process.env.NSCONF_EMAIL = name;
+            var params = nsconfig({}, true);
+
+            should(params).have.property('email', name);
+        });
+
+        it('overrides global setting with local ones', () => {
+            var nameGlobal = `globalemail${myrand()}`;
+            fs.writeFileSync(`${osenv.home()}/.ns/nsconfig.json`,
+                JSON.stringify({email: nameGlobal})
+            );
+
+            var nameLocal = `localemail${myrand()}`;
+            fs.writeFileSync(`./nsconfig.json`,
+                JSON.stringify({email: nameLocal})
+            );
+
+            var params = nsconfig({}, true);
+
+            console.log(params);
+
+            should(params).have.property('email', nameLocal);
+        });
+
+        it('use a custom required parameter. Fail on it.', function () {
+            this.timeout(10000);
+
+            should(function () {
+                nsconfig({}, [{name: 'anyparams', required: true}]);
+            }).throw();
+        });
     });
-
-    it('reads email from local config file', () => {
-        var name = `localemail${myrand()}`;
-
-        fs.writeFileSync('./nsconfig.json',
-            JSON.stringify({email: name})
-        );
-        var params = nsconfig({}, true);
-
-        should(params).have.property('email', name);
-    });
-
-    it('reads email from environment variable', () => {
-        var name = `localemail${myrand()}`;
-        process.env.NSCONF_EMAIL = name;
-        var params = nsconfig({}, true);
-
-        should(params).have.property('email', name);
-    });
-
-    it('overrides global setting with local ones', () => {
-        var nameGlobal = `globalemail${myrand()}`;
-        fs.writeFileSync(`${osenv.home()}/.ns/nsconfig.json`,
-            JSON.stringify({email: nameGlobal})
-        );
-
-        var nameLocal = `localemail${myrand()}`;
-        fs.writeFileSync(`./nsconfig.json`,
-            JSON.stringify({email: nameLocal})
-        );
-
-        var params = nsconfig({}, true);
-
-        console.log(params);
-
-        should(params).have.property('email', nameLocal);
-    });
-
-    it('use a custom required parameter. Fail on it.' , function() {
-
-        this.timeout(10000);
-
-        should(function(){
-            nsconfig({}, [{name: 'anyparams', required: true}]);
-        }).throw();
-
-    });
-
 });

@@ -1,0 +1,7 @@
+{
+  "email": "email@suiteplus.com",
+  "passwordHash": "<password base64>",
+  "account": "DDAA12321",
+  "realm": "system.netsuite.com",
+  "role": 3
+}

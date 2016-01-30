@@ -1,0 +1,1 @@
+"use strict";var fs=require("fs"),path=require("path");module.exports=function(){function r(r){for(var e="",s=path.parse(r),t=s.dir.split("/"),a=0;a<t.length-1;a++)e+=t[a]+"/";return e+s.base}for(var e=path.parse(process.cwd()+"/nsconfig.json"),s=e.dir+"/"+e.base,t=0;5>t;t++){if(fs.existsSync(s))return module.exports.CONF_CWD=path.parse(s).dir,s;s=r(s)}return""};

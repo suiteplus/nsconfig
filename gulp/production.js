@@ -5,8 +5,8 @@ var gulp = require('gulp'),
     plugins = gulpLoadPlugins(),
     appRoot = process.cwd(),
     paths = {
-        js: [appRoot + '/src/**/*.js'],
-        jsTests: [appRoot + '/test/**/*-test.js']
+        js: [`${appRoot}/src/**/*.js`],
+        jsDist: `${appRoot}/dist`
     };
 
 var defaultTasks = ['env:prod', 'prod:babel'];
@@ -18,7 +18,8 @@ gulp.task('env:prod', ['test:jshint', 'test:coverage'], () => {
 gulp.task('prod:babel', () => {
     return gulp.src(paths.js)
         .pipe(plugins.babel())
-        .pipe(gulp.dest(appRoot + '/dist'));
+        .pipe(plugins.uglify())
+        .pipe(gulp.dest(paths.jsDist));
 });
 
 gulp.task('production', defaultTasks);

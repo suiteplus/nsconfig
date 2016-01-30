@@ -1,0 +1,1 @@
+"use strict";var PARAMS_DEF=require("./default-params");module.exports=function(){return PARAMS_DEF.reduce(function(e,r){var n=process.env["NSCONF_"+r.name.toUpperCase()];return n&&(e[r.name]=n),e},{})};

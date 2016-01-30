@@ -1,0 +1,1 @@
+"use strict";var PARAMS_DEF=require("./default-params");module.exports=function(e,r,a){var n=PARAMS_DEF.concat(a||[]);return n.reduce(function(a,n){var t=e[n.name];if(!t&&n.base64){var u=e[n.name+"Hash"];u&&(t=new Buffer(u,"base64").toString())}if(!t&&n.required&&!r)throw Error("No "+n.name+" defined.");return a[n.name]=t||n.def,a},{})};

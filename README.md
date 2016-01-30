@@ -52,8 +52,12 @@ interface ParamsDef {
 }
 ```
 
-
 ### Output example
+
+See two configurations files:
+
+  * _Raw password:_ [nsconfig.json](./example/nsconfig-simple.json)
+  * _Hash password:_ [nsconfig.json](./example/nsconfig-hash.json)
 
 	var params = nsconfig()
 
