@@ -6,7 +6,9 @@ module.exports = function () {
     return PARAMS_DEF.reduce(function (prev, curr) {
 
         var value = process.env['NSCONF_' + curr.name.toUpperCase()];
-        if (value) prev[curr.name] = value;
+        if (value) {
+            prev[curr.name] = new Buffer(value, curr.base64 ? 'base64' : null).toString();
+        }
         return prev;
     }, {});
 };

@@ -117,6 +117,15 @@ describe('<nsconfig Tests>', () => {
             should(params).have.property('email', name);
         });
 
+        it('reads hashed password from environment variable', () => {
+            var pass = 'foobar';
+            var hahsed = new Buffer(pass).toString('base64');
+            process.env.NSCONF_PASSWORD = hahsed;
+            var params = nsconfig({}, true);
+
+            should(params).have.property('password', pass);
+        });
+
         it('overrides global setting with local ones', () => {
             var nameGlobal = `globalemail${myrand()}`;
             fs.writeFileSync(`${osenv.home()}/.ns/nsconfig.json`,
@@ -133,6 +142,19 @@ describe('<nsconfig Tests>', () => {
             console.log(params);
 
             should(params).have.property('email', nameLocal);
+        });
+
+        it('overrides everything with env variables', () => {
+          var email = 'my@email.com';
+          process.env.NSCONF_EMAIL = email;
+
+          var nameLocal = `localemail${myrand()}`;
+          fs.writeFileSync(`./nsconfig.json`,
+              JSON.stringify({email: nameLocal})
+          );
+          var params = nsconfig({email: 'not@mine.gov'}, true);
+
+          should(params).have.property('email', email);
         });
 
         it('use a custom required parameter. Fail on it.', function () {
