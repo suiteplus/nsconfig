@@ -28,7 +28,7 @@ module.exports = function (params, arg2, arg3) {
         confFileLocal = parseConfig(resolveLocal()),
         confEnvVars = resolveEnv();
 
-    params = _.extend({}, confEnvVars, confFileGlobal, confFileLocal, params);
+    params = _.extend({}, confFileGlobal, confFileLocal, params, confEnvVars);
     params = checkParams(params, nothrow, custom);
     return params;
 };
