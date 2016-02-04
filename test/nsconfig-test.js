@@ -144,6 +144,19 @@ describe('<nsconfig Tests>', () => {
             should(params).have.property('email', nameLocal);
         });
 
+        it('overrides everything with env variables', () => {
+          var email = 'my@email.com';
+          process.env.NSCONF_EMAIL = email;
+
+          var nameLocal = `localemail${myrand()}`;
+          fs.writeFileSync(`./nsconfig.json`,
+              JSON.stringify({email: nameLocal})
+          );
+          var params = nsconfig({email: 'not@mine.gov'}, true);
+
+          should(params).have.property('email', email);
+        });
+
         it('use a custom required parameter. Fail on it.', function () {
             this.timeout(10000);
 
