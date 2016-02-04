@@ -117,6 +117,15 @@ describe('<nsconfig Tests>', () => {
             should(params).have.property('email', name);
         });
 
+        it('reads hashed password from environment variable', () => {
+            var pass = 'foobar';
+            var hahsed = new Buffer(pass).toString('base64');
+            process.env.NSCONF_PASSWORD = hahsed;
+            var params = nsconfig({}, true);
+
+            should(params).have.property('password', pass);
+        });
+
         it('overrides global setting with local ones', () => {
             var nameGlobal = `globalemail${myrand()}`;
             fs.writeFileSync(`${osenv.home()}/.ns/nsconfig.json`,
