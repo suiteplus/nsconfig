@@ -52,9 +52,20 @@ interface ParamsDef {
 }
 ```
 
-### Output example
+### passwords and passwordHash
 
-See two configurations files:
+Instead of setting the `password` key, you may set `passwordHash` with a base64 encoded password.
+
+Or you may use one the following options in order to avoid storing the password directly into the
+project's `nsconfig.json`:
+
+ - Set up the password as environment variable (`NSCONF_PASSWORD`)
+ 
+ - Set the the password at `~/.ns/nsconfig.json`
+
+### Example
+
+Both configuration files below yield the same output:
 
   * _Raw password:_ [nsconfig.json](./example/nsconfig-simple.json)
   * _Hash password:_ [nsconfig.json](./example/nsconfig-hash.json)
