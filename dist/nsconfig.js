@@ -5,8 +5,7 @@ var _ = {
 },
     osenv = require('osenv');
 
-var nsconfName = require('./nsconf-name'),
-    parseConfig = require('./parse-config'),
+var parseConfig = require('./parse-config'),
     resolveEnv = require('./resolve-env'),
     resolveLocal = require('./resolve-local'),
     checkParams = require('./check-params');
@@ -25,8 +24,10 @@ module.exports = function (params, arg2, arg3) {
         custom = arg2 || {};
     }
 
-    var confFileGlobal = parseConfig(osenv.home() + '/.ns/' + nsconfName),
-        confFileLocal = parseConfig(resolveLocal()),
+    var confFileName = params.conffile || process.env.NSCONF || process.env.NSCONF_CONFFILE || 'nsconfig.json';
+
+    var confFileGlobal = parseConfig(osenv.home() + '/.ns/' + confFileName),
+        confFileLocal = parseConfig(resolveLocal(confFileName)),
         confEnvVars = resolveEnv();
 
     params = _.extend({}, confFileGlobal, confFileLocal, params, confEnvVars);
