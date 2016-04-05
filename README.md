@@ -25,7 +25,9 @@ Reads configuration parameters from the following sources (overriding each param
 
   *  Searches for a `~/.ns/nsconfig.json` (on windows `~` is `X:/Users/<user>`)
 
-  *  Searches for environment variables. In this case, parameters are uppercased and prefixed with `NSCONF_`.
+  *  Environment variables found with the syntax `NSCONF_<UPPERCASE_PARAMETER_NAME>`. E.g. the `email` param can be forced to something else by exporting `NSCONF_EMAIL=email@example.com`.
+
+The name `nsconfig.json` mentioned above can be overridden by setting the environment variable `NSCONF` with the config file you want to point to. E.g. `NSCONF='nsconfig-myproject.json'` looks for `nsconfig-myproject.json` instead of `nsconfig.json`, using the same methods as mentioned above. This can be useful when working with multiple NetSuite accounts. Please note that this overrides the file name and not the file path.
 
 __projectParams__
 
