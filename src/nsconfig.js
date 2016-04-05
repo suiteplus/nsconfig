@@ -4,7 +4,8 @@ var _ = {
     },
     osenv = require('osenv');
 
-var parseConfig = require('./parse-config'),
+var nsconfName = require('./nsconf-name'),
+    parseConfig = require('./parse-config'),
     resolveEnv = require('./resolve-env'),
     resolveLocal = require('./resolve-local'),
     checkParams = require('./check-params');
@@ -23,7 +24,7 @@ module.exports = function (params, arg2 , arg3) {
         custom = arg2 || {};
     }
 
-    var confFileGlobal = parseConfig(`${osenv.home()}/.ns/nsconfig.json`),
+    var confFileGlobal = parseConfig(`${osenv.home()}/.ns/${nsconfName}`),
         confFileLocal = parseConfig(resolveLocal()),
         confEnvVars = resolveEnv();
 
