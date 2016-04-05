@@ -70,14 +70,16 @@ Both configuration files below yield the same output:
   * _Raw password:_ [nsconfig.json](./example/nsconfig-simple.json)
   * _Hash password:_ [nsconfig.json](./example/nsconfig-hash.json)
 
-	var params = nsconfig()
-
+```
+var params = nsconfig()
+```
+yields
 ```json
 {
 	"email": "email@suiteplus.com",
 	"password": "*****",
 	"account": "DDAA12321",
-	"realm": "system.netsuite.com",
+	"realm": "netsuite.com",
 	"role": 3
 }
 ```
