@@ -1,10 +1,9 @@
 'use strict';
 
-var nsconfName = require('./nsconf-name'),
-    fs = require('fs'),
+var fs = require('fs'),
     path = require('path');
 
-module.exports = function () {
+module.exports = function resolveLocal(fileName) {
     function parent(pathstr) {
         var out = '';
         var pathobj = path.parse(pathstr);
@@ -14,7 +13,7 @@ module.exports = function () {
         }return out + pathobj.base;
     }
 
-    var pathobj = path.parse(process.cwd() + '/' + nsconfName);
+    var pathobj = path.parse(process.cwd() + '/' + fileName);
     var trial = pathobj.dir + '/' + pathobj.base;
     for (var it = 0; it < 5; it++) {
         if (fs.existsSync(trial)) {

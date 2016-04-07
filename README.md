@@ -27,7 +27,13 @@ Reads configuration parameters from the following sources (overriding each param
 
   *  Environment variables found with the syntax `NSCONF_<UPPERCASE_PARAMETER_NAME>`. E.g. the `email` param can be forced to something else by exporting `NSCONF_EMAIL=email@example.com`.
 
-The name `nsconfig.json` mentioned above can be overridden by setting the environment variable `NSCONF` with the config file you want to point to. E.g. `NSCONF='nsconfig-myproject.json'` looks for `nsconfig-myproject.json` instead of `nsconfig.json`, using the same methods as mentioned above. This can be useful when working with multiple NetSuite accounts. Please note that this overrides the file name and not the file path.
+When working with multiple netsuite environments you may override the file
+name `nsconfig.json` with e.g. `nsconfig-myproject.json` by either:
+
+  - setting the `conffile` parameter;
+
+  - setting the environment variable `NSCONF` or `NSCONF_CONFFILE`.
+
 
 __projectParams__
 
@@ -72,14 +78,16 @@ Both configuration files below yield the same output:
   * _Raw password:_ [nsconfig.json](./example/nsconfig-simple.json)
   * _Hash password:_ [nsconfig.json](./example/nsconfig-hash.json)
 
-	var params = nsconfig()
-
+```
+var params = nsconfig()
+```
+yields
 ```json
 {
 	"email": "email@suiteplus.com",
 	"password": "*****",
 	"account": "DDAA12321",
-	"realm": "system.netsuite.com",
+	"realm": "netsuite.com",
 	"role": 3
 }
 ```
