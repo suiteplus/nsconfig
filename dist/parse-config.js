@@ -13,7 +13,7 @@ module.exports = function (path) {
         vm.runInContext(code, context, path);
     } catch (e) {
         //purposely ignore
-        console.error(e);
+        console.error('Failed parsing json at ' + path + '.');
     }
 
     return out.json;

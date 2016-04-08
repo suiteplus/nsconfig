@@ -9,7 +9,8 @@ var parseConfig = require('./parse-config'),
     resolveLocal = require('./resolve-local'),
     checkParams = require('./check-params');
 
-module.exports = function (params, arg2 , arg3) {
+module.exports = nsconfig;
+function nsconfig(params, arg2 , arg3) {
     params = params || {};
 
     var custom = {};
@@ -24,13 +25,14 @@ module.exports = function (params, arg2 , arg3) {
     }
 
     var confFileName = params.conffile || process.env.NSCONF || process.env.NSCONF_CONFFILE || 'nsconfig.json';
+    var opt = { CONF_CWD : null };
 
     var confFileGlobal = parseConfig(`${osenv.home()}/.ns/${confFileName}`),
-        confFileLocal = parseConfig(resolveLocal(confFileName)),
+        confFileLocal = parseConfig(resolveLocal(confFileName, opt)),
         confEnvVars = resolveEnv();
 
     params = _.extend({}, confFileGlobal, confFileLocal, params, confEnvVars);
     params = checkParams(params, nothrow,custom);
+    nsconfig.CONF_CWD = opt.CONF_CWD;
     return params;
-};
-
+}

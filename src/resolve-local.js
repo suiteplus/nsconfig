@@ -2,7 +2,8 @@
 var fs = require('fs'),
     path = require('path');
 
-module.exports = function resolveLocal(fileName) {
+module.exports = function resolveLocal(fileName, opts) {
+    if (!opts) opts = {};
     function parent(pathstr) {
         var out = '';
         var pathobj = path.parse(pathstr);
@@ -16,7 +17,7 @@ module.exports = function resolveLocal(fileName) {
     var trial = pathobj.dir + '/' + pathobj.base;
     for (var it = 0; it < 5; it++) {
         if (fs.existsSync(trial)) {
-            module.exports.CONF_CWD = path.parse(trial).dir;
+            opts.CONF_CWD = path.parse(trial).dir;
             return trial;
         }
         trial = parent(trial);

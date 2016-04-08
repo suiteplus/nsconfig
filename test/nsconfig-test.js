@@ -164,5 +164,16 @@ describe('<nsconfig Tests>', () => {
                 nsconfig({}, [{name: 'anyparams', required: true}]);
             }).throw();
         });
+        
+        it('export the path which I found the config file', function() {
+            var email = `localemail${myrand()}`;
+            fs.writeFileSync('./nsconfig.json', JSON.stringify({ email : email, password : 'aa', account : 'acc' }));
+            process.chdir(process.cwd() + '/test');
+            nsconfig();
+            should(nsconfig.CONF_CWD.substr(-9)).be.equal('/nsconfig');
+        });
+        
+        
+        
     });
 });
