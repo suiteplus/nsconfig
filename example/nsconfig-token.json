@@ -1,0 +1,11 @@
+{
+  "email": "email@suiteplus.com",
+  "password": "******",
+  "account": "DDAA12321",
+  "realm": "system.netsuite.com",
+  "role": 3,
+  "consumerKey": "",
+  "consumerSecret": "",
+  "token": "",
+  "tokenSecret": ""
+}
