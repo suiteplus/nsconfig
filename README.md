@@ -47,7 +47,11 @@ The default parameters are:
     {name: 'password', required: true},
     {name: 'account', required: true},
     {name: 'realm', def: 'system.netsuite.com'},
-    {name: 'role'}
+    {name: 'role'},
+    {name: 'consumerKey'},
+    {name: 'consumerSecret'},
+    {name: 'token'},
+    {name: 'tokenSecret'}
 ]
 ```
 Currently accepted options for each custom parameter are:
@@ -68,8 +72,24 @@ Or you may use one the following options in order to avoid storing the password 
 project's `nsconfig.json`:
 
  - Set up the password as environment variable (`NSCONF_PASSWORD`)
- 
+
  - Set the the password at `~/.ns/nsconfig.json`
+
+### Token Based Authentication
+
+When using token based authentication, the following 4 values are required:
+
+ - `consumerKey`
+ - `consumerSecret`
+ - `token`
+ - `tokenSecret`
+
+Setup:
+ - Enable Token-based Authentication (Enable Features > SuiteCloud > Manage Authentication)
+ - Create an integration record to generate a consumer key and secret
+ - Generate a user token (must enable a role with User Access Tokens permission - Administrator role cannot be used)
+
+The email and password are ignored when token based authentication is used.  (They are still required but can just have placeholder values)
 
 ### Example
 
