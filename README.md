@@ -10,8 +10,9 @@ Set up authentication and custom parameters environment-wise or project-wise.
 
 ## Install [![Dependency Status][david-image]][david-url] [![devDependency Status][david-image-dev]][david-url-dev]
 ```bash
-    npm install nsconfig
+    npm install suiteplus/nsconfig
 ```
+> **WARNING**:  The version on NPM is outdated, use the command above to install from GitHub
 
 ## Usage
 
